@@ -1,0 +1,19 @@
+.button-style{
+  border-radius: 0;
+}
+
+.ant-btn-theme.ant-btn-theme:not(:disabled) {
+  background-color: var(--theme-color);
+  border-color: var(--theme-color);
+  color: #fff;
+  &:hover{
+    opacity: .8;
+  }
+}
+
+.ant-btn-theme-thing.ant-btn-theme-thing:not(:disabled){
+  &:hover{
+    border-color: var(--theme-color);
+    color: var(--theme-color);
+  }
+}

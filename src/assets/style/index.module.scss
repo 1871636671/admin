@@ -1,0 +1,13 @@
+.container{
+ display: flex;
+}
+
+.rightView{
+  flex: 1;
+  flex-direction: column;
+  display: flex;
+}
+
+.content{
+  flex: 1;
+}
