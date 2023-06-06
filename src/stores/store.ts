@@ -1,6 +1,15 @@
 import { defineStore } from 'pinia'
 import type { routeType } from '@/router/routes'
 
+interface curmbValue {
+  name: string
+  icon?: string
+  path: string
+}
+interface curmbType {
+  [key: string]: curmbValue[]
+}
+
 export const useStore = defineStore('store', {
   state: () => ({
     // 主题色
@@ -8,7 +17,15 @@ export const useStore = defineStore('store', {
     // 菜单折叠状态
     collapsed: false,
     //菜单
-    menuList: [] as routeType[]
+    menuList: [] as routeType[],
+    // 面包屑字典
+    crumbObj: {} as curmbType,
+    // 面包屑
+    crumbs: [] as curmbValue[],
+    // 菜单激活索引
+    selectKey: localStorage.getItem('openKey')
+      ? JSON.parse(localStorage.getItem('openKey') || '')
+      : []
   }),
   actions: {
     /**
@@ -25,6 +42,10 @@ export const useStore = defineStore('store', {
     },
     toggleCollapsed() {
       this.collapsed = !this.collapsed
+    },
+    setSelectKey(val: string) {
+      this.selectKey = val ? [val] : []
+      localStorage.setItem('selectKey', JSON.stringify(this.selectKey))
     }
   }
 })

@@ -1,5 +1,5 @@
 import { defineComponent } from 'vue'
-import styles from './meun.module.scss'
+import styles from './menu.module.scss'
 
 const MenuView = defineComponent({
   setup() {

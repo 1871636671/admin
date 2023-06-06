@@ -1,8 +1,8 @@
-import { Button, Menu } from 'ant-design-vue'
+import { Button, Menu, Breadcrumb } from 'ant-design-vue'
 import * as Icons from '@ant-design/icons-vue'
 import type { App } from 'vue'
 
-const componentList = [Button, Menu]
+const componentList = [Button, Menu, Breadcrumb]
 
 export default (app: App) => {
   componentList.forEach(app.use)

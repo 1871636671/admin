@@ -7,6 +7,7 @@ export interface routeType {
   parentId?: number
   sortNumber?: number
   children?: routeType[]
+  keyPath?: string
 }
 
 const routes: routeType[] = [

@@ -1,14 +1,38 @@
-import { defineComponent, ref } from 'vue'
+import { defineComponent, onMounted, ref, watch } from 'vue'
 import styles from './slider.module.scss'
 import config from '@/config/website'
 import { useStore } from '@/stores/store'
 import MenuItem from '../menuitem/menuItem'
 
+interface menuRefType {
+  menuClick: (path: string) => void
+}
+
 const Slider = defineComponent({
   setup() {
-    const openKeys = ref(['sub1'])
-    const selectedKeys = ref(['1'])
+    const getKeys = (key: string) => {
+      const keys = localStorage.getItem(key)
+
+      return keys ? JSON.parse(keys) : []
+    }
+
     const store = useStore()
+
+    const openKeys = ref(getKeys('openKeys'))
+
+    const selectedKeys = ref(store.selectKey)
+
+    const menuItemRef = ref<menuRefType | null>(null)
+
+    const onSelect = ({ keyPath }: { keyPath: string[] }) => {
+      const path = '/' + keyPath.join('/')
+
+      menuItemRef.value?.menuClick(path)
+    }
+
+    watch(openKeys, () => {
+      localStorage.setItem('openKeys', JSON.stringify(openKeys.value))
+    })
 
     return () => (
       <div class={styles.container} style={{ width: !store.collapsed ? '220px' : '81px' }}>
@@ -29,10 +53,11 @@ const Slider = defineComponent({
         <a-menu
           v-model:openKeys={openKeys.value}
           v-model:selectedKeys={selectedKeys.value}
-          mode="inline"
           inline-collapsed={store.collapsed}
+          onSelect={onSelect}
+          mode="inline"
         >
-          <MenuItem list={store.menuList}></MenuItem>
+          <MenuItem ref={menuItemRef} list={store.menuList}></MenuItem>
         </a-menu>
       </div>
     )
