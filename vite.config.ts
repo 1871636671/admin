@@ -19,5 +19,10 @@ export default defineConfig({
         additionalData: `@import '@/assets/style/global.scss';` // 引入全局变量文件
       }
     }
+  },
+  server: {
+    proxy: {
+      '/api': 'http://localhost:5050'
+    }
   }
 })

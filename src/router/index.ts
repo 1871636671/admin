@@ -1,8 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import IndexView from '@/views'
-import routes from './routes'
+// import routes from './routes'
 import { routeHandle } from '@/utils/utils'
 import { useStore } from '@/stores/store'
+import LoginView from '@/views/login/login'
+import { getMenu } from '@/apis/login'
+import { useUser } from '@/stores/login'
+import { showToast } from '@/utils/tips'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,28 +15,72 @@ const router = createRouter({
       path: '/',
       name: 'index',
       component: IndexView,
+      redirect: 'home',
+      children: []
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginView,
       children: []
     }
   ]
 })
 
-router.beforeEach((to) => {
+router.beforeEach(async (to) => {
   const store = useStore()
+  const user = useUser()
 
-  if (store.menuList.length === 0) {
-    const { r1, r2 } = routeHandle(routes)
+  if (user.token) {
+    if (to.path === '/login') {
+      return {
+        path: '/',
+        replace: true
+      }
+    } else if (store.menuList.length === 0) {
+      const res = await getMenu().catch(() => null)
 
-    r1.forEach((r) => router.addRoute('index', r))
+      console.log(res, 'routes')
 
-    store.menuList.push(...r2)
+      if (!res?.menuList) {
+        user.removeToken()
 
-    return {
-      path: to.fullPath,
-      replace: true
+        return {
+          path: '/login',
+          replace: true
+        }
+      }
+
+      const { r1, r2 } = routeHandle(res.menuList)
+
+      r1.forEach((r) => router.addRoute('index', r))
+
+      store.menuList.push(...r2)
+
+      return {
+        ...to,
+        replace: true
+      }
+    }
+  } else {
+    if (to.path !== '/login') {
+      console.log('执行了')
+
+      showToast('请先登录!', 'error')
+      return {
+        path: '/login',
+        replace: true
+      }
     }
   }
+})
 
-  const keyPath = to.fullPath.split('/').filter(Boolean)
+router.beforeResolve((to) => {
+  const keyPath = to.path.split('/').filter(Boolean)
+
+  const store = useStore()
+
+  store.setTab(to)
 
   if (keyPath.length) {
     store.setSelectKey(keyPath[keyPath.length - 1])

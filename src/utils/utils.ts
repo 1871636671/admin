@@ -24,16 +24,17 @@ const handle = (routes: routeType[], prefix: string = ''): RouteRecordRaw[] => {
 
       r1.push(...r4)
     } else {
-      r1.push({
-        path: prefix ? prefix + `/${item.path}` : item.path,
-        name: item.path,
-        component: cmp[`../views/${item.viewPath}/index.tsx`],
-        meta: {
-          icon: item.icon,
-          name: item.name
-        },
-        children: []
-      })
+      item.type !== 2 &&
+        r1.push({
+          path: prefix ? prefix + `/${item.path}` : item.path,
+          name: item.path,
+          component: cmp[`../views/${item.viewPath}/index.tsx`],
+          meta: {
+            icon: item.icon,
+            name: item.name
+          },
+          children: []
+        })
     }
   })
 

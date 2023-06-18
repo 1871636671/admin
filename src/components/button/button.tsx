@@ -11,7 +11,7 @@ const Button = defineComponent({
         return ['add', 'edit', 'remove', 'view'].includes(value)
       }
     },
-    onClick: {
+    submit: {
       type: Function
     },
     text: {
@@ -26,7 +26,7 @@ const Button = defineComponent({
   setup(props) {
     const clickHandler = (...arg: any[]) => {
       console.log(props.clickType)
-      props.onClick && props.onClick(...arg)
+      props.submit && props.submit(...arg)
     }
 
     return () => (

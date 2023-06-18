@@ -3,7 +3,7 @@ import styles from './footer.module.scss'
 
 const Footer = defineComponent({
   setup() {
-    return () => <div class={styles.container}>header</div>
+    return () => <div class={styles.container}>{new Date().toLocaleString()}</div>
   }
 })
 

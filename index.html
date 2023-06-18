@@ -1,13 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <link rel="icon" href="/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vite App</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vite App</title>
+  <style>
+    .loading {
+      width: 120px;
+      height: 22px;
+      border-radius: 20px;
+      color: #514b82;
+      border: 2px solid;
+      position: relative;
+    }
+
+    .loading::before {
+      content: "";
+      position: absolute;
+      margin: 2px;
+      inset: 0 100% 0 0;
+      border-radius: inherit;
+      background: #514b82;
+      animation: p6 2s infinite;
+    }
+
+    @keyframes p6 {
+      100% {
+        inset: 0
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div class="loading"></div>
+  </div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
 </html>

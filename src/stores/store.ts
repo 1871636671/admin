@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
 import type { routeType } from '@/router/routes'
+import config from '@/config/website'
+import type { RouteLocationNormalized } from 'vue-router'
 
 interface curmbValue {
   name: string
@@ -10,10 +12,20 @@ interface curmbType {
   [key: string]: curmbValue[]
 }
 
+interface settingsType {
+  theme?: string
+  slider?: boolean
+  footer?: boolean
+  [key: string]: string | boolean | undefined
+}
+
+interface tabItem {
+  name?: string
+  icon?: string
+}
+
 export const useStore = defineStore('store', {
   state: () => ({
-    // 主题色
-    theme: localStorage.getItem('theme') || '',
     // 菜单折叠状态
     collapsed: false,
     //菜单
@@ -25,20 +37,31 @@ export const useStore = defineStore('store', {
     // 菜单激活索引
     selectKey: localStorage.getItem('openKey')
       ? JSON.parse(localStorage.getItem('openKey') || '')
-      : []
+      : [],
+    settings: {
+      theme: config.defaultTheme,
+      slider: true,
+      footer: true,
+      tab: true
+    } as settingsType,
+    tabs: new Map<string, tabItem>(),
+    isTabActive: {}
   }),
   actions: {
-    /**
-     * 修改主题色
-     * @param color 哈希颜色值
-     */
-    setTheme(color: string) {
-      this.theme = color
-      localStorage.setItem('theme', color)
-      document.getElementsByTagName('body')[0].style.setProperty('--theme-color', color)
-      document
-        .getElementsByTagName('body')[0]
-        .style.setProperty('--theme-color-light', `${color}1a`)
+    setSettings(st: Partial<typeof this.settings>) {
+      if (st.theme && st.theme !== this.settings.theme) {
+        document.getElementsByTagName('body')[0].style.setProperty('--theme-color', st.theme)
+        document
+          .getElementsByTagName('body')[0]
+          .style.setProperty('--theme-color-light', `${st.theme}1a`)
+      }
+
+      this.settings = {
+        ...this.settings,
+        ...st
+      }
+
+      localStorage.setItem('settings', JSON.stringify(this.settings))
     },
     toggleCollapsed() {
       this.collapsed = !this.collapsed
@@ -46,6 +69,22 @@ export const useStore = defineStore('store', {
     setSelectKey(val: string) {
       this.selectKey = val ? [val] : []
       localStorage.setItem('selectKey', JSON.stringify(this.selectKey))
+    },
+    setTab(route: RouteLocationNormalized) {
+      if (!route.path || config.whiteList.includes(route.path)) return
+
+      const r = {
+        ...route.meta
+      }
+
+      if (!this.tabs.has('/home')) {
+        this.tabs.set('/home', {
+          name: '首页',
+          icon: 'ClusterOutlined'
+        })
+      }
+
+      this.tabs.set(route.path, r)
     }
   }
 })

@@ -24,3 +24,26 @@
   align-items: flex-end;
   margin-right: 20px;
 }
+
+.stView{
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.title{
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+  img{
+   width: 30px;
+   height: 30px;  
+  }
+
+  .titleText{
+    font-size: 16px;
+    margin: 0 50px 0 10px;
+   
+  }
+}
