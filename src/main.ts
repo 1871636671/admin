@@ -3,6 +3,7 @@ import './assets/style/main.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import install from '@/config/antd'
+import GInstall from '@/components/index'
 import timerDirective from './config/timer'
 import ColorPicker from 'colorpicker-v3' // 颜色选择器
 import 'colorpicker-v3/style.css' // 引入样式文件
@@ -14,6 +15,9 @@ const app = createApp(App)
 
 // 注册antd
 install(app)
+
+// 自定义全局组件
+GInstall(app)
 
 //页面停留
 timerDirective(app)

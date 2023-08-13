@@ -27,7 +27,11 @@ const MenuItem = defineComponent({
 
     return () => {
       return props.list.map((item) => {
-        if (item.children && item.children.length > 0) {
+        if (item.type === 2) {
+          return null
+        }
+
+        if (item.type === 0) {
           const sy = props.crumb || item.path
 
           return (
@@ -36,7 +40,9 @@ const MenuItem = defineComponent({
               title={item.name}
               icon={() => <Icon name={item.icon}></Icon>}
             >
-              <MenuItem list={item.children} crumb={sy}></MenuItem>
+              {item.children && item.children.length > 0 && (
+                <MenuItem list={item.children} crumb={sy}></MenuItem>
+              )}
             </a-sub-menu>
           )
         } else {

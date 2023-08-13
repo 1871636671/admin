@@ -1,17 +1,21 @@
-import { defineComponent } from 'vue'
+import { defineComponent, type PropType } from 'vue'
 import buttonProps from 'ant-design-vue/es/button/buttonTypes'
 import styles from './button.module.scss'
+
+type ClickEnum = 'add' | 'edit' | 'remove' | 'view'
+
+type CustomTypeEnum = 'primary' | 'warn' | 'danger'
+
+type BtnStyleEnum = 'default' | 'border' | 'text'
 
 const Button = defineComponent({
   props: {
     ...buttonProps(),
     clickType: {
-      type: String,
-      validator(value: string) {
-        return ['add', 'edit', 'remove', 'view'].includes(value)
-      }
+      type: String as PropType<ClickEnum>,
+      default: ''
     },
-    submit: {
+    onSubmit: {
       type: Function
     },
     text: {
@@ -19,21 +23,29 @@ const Button = defineComponent({
       default: '确定'
     },
     customType: {
-      type: String,
-      default: 'theme'
+      type: String as PropType<CustomTypeEnum>,
+      default: 'primary'
+    },
+    btnStyle: {
+      type: String as PropType<BtnStyleEnum>,
+      default: 'default'
     }
   },
   setup(props) {
     const clickHandler = (...arg: any[]) => {
       console.log(props.clickType)
-      props.submit && props.submit(...arg)
+      props.onSubmit && props.onSubmit(...arg)
     }
 
     return () => (
       <a-button
         class={[
           styles['button-style'],
-          props.customType === 'theme' ? styles['ant-btn-theme'] : styles['ant-btn-theme-thing']
+          props.btnStyle === 'border'
+            ? styles['ant-btn-theme-thing']
+            : props.btnStyle === 'text'
+            ? styles['ant-btn-link']
+            : styles['ant-btn-theme']
         ]}
         {...props}
         onClick={clickHandler}

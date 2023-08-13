@@ -4,7 +4,7 @@ import IndexView from '@/views'
 import { routeHandle } from '@/utils/utils'
 import { useStore } from '@/stores/store'
 import LoginView from '@/views/login/login'
-import { getMenu } from '@/apis/login'
+import { getMenu } from '@/apis/menu'
 import { useUser } from '@/stores/login'
 import { showToast } from '@/utils/tips'
 
@@ -40,9 +40,8 @@ router.beforeEach(async (to) => {
     } else if (store.menuList.length === 0) {
       const res = await getMenu().catch(() => null)
 
-      console.log(res, 'routes')
-
-      if (!res?.menuList) {
+      if (!res || res.length === 0) {
+        showToast('暂未分配菜单,请联系管理员!', 'warning')
         user.removeToken()
 
         return {
@@ -51,11 +50,15 @@ router.beforeEach(async (to) => {
         }
       }
 
-      const { r1, r2 } = routeHandle(res.menuList)
+      const { r1, r2, r3 } = routeHandle(res)
 
       r1.forEach((r) => router.addRoute('index', r))
 
       store.menuList.push(...r2)
+
+      store.treeList.push(...r3)
+
+      console.log(r3, r2, 'r3')
 
       return {
         ...to,

@@ -17,3 +17,7 @@ declare module 'vue-router' {
     name?: string
   }
 }
+
+export interface AnyString {
+  [key: string]: any
+}

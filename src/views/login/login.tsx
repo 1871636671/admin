@@ -10,8 +10,8 @@ import { useRouter } from 'vue-router'
 const Login = defineComponent({
   setup() {
     const formData = reactive({
-      user: '',
-      password: ''
+      user: 'gzp2022',
+      password: 'gzp765831518'
     })
 
     const router = useRouter()
@@ -40,6 +40,7 @@ const Login = defineComponent({
           </div>
           <div class={styles.form}>
             <a-input
+              class={[styles['ant-input'], styles['ant-input-affix-wrapper']]}
               v-model:value={formData.user}
               placeholder="请输入账号"
               v-slots={{
@@ -48,6 +49,7 @@ const Login = defineComponent({
             />
             <div style={{ width: '100%', height: '1px', backgroundColor: '#d9d9d9' }}></div>
             <a-input
+              class={[styles['ant-input'], styles['ant-input-affix-wrapper']]}
               type="password"
               v-model:value={formData.password}
               placeholder="请输入密码"
@@ -56,7 +58,11 @@ const Login = defineComponent({
               }}
             />
           </div>
-          <Button style={{ width: '80%', margin: '10px 0' }} text={'登录'} submit={login}></Button>
+          <Button
+            style={{ width: '80%', margin: '10px 0' }}
+            text={'登录'}
+            onSubmit={login}
+          ></Button>
         </div>
       </div>
     )

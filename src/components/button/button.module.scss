@@ -2,9 +2,23 @@
   border-radius: 0;
 }
 
+.button-style[customtype=primary]{
+  --btn-color:var(--theme-color)
+}
+
+.button-style[customtype=danger]{
+  --btn-color:#ff4d4f
+}
+
+.button-style[customtype=warn]{
+  --btn-color:#faad14
+}
+
+
+
 .ant-btn-theme.ant-btn-theme:not(:disabled) {
-  background-color: var(--theme-color);
-  border-color: var(--theme-color);
+  background-color: var(--btn-color);
+  border-color: var(--btn-color);
   color: #fff;
   &:hover{
     opacity: .8;
@@ -13,7 +27,23 @@
 
 .ant-btn-theme-thing.ant-btn-theme-thing:not(:disabled){
   &:hover{
-    border-color: var(--theme-color);
-    color: var(--theme-color);
+    border-color: var(--btn-color);
+  color: var(--btn-color);
   }
 }
+
+.ant-btn-link.ant-btn-link{
+  border-width: 0px;
+  background-color: transparent;
+  box-shadow:none;
+  color: var(--btn-color);
+
+  &:not(:disabled):hover{
+    color: var(--btn-color);
+    background-color: transparent;
+    box-shadow:none;
+    opacity: .8;
+  }
+}
+
+

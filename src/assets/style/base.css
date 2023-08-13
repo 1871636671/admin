@@ -2,6 +2,8 @@
 :root {
   --theme-color: #32cd32;
   --theme-color-light: #32cd321a;
+  --primary-color: #2db7f5;
+  --success-color: #87d068;
 }
 
 *,

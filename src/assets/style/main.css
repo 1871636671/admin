@@ -52,21 +52,25 @@
   border-bottom-color: var(--theme-color) !important;
 }
 
-.ant-input,
-.ant-input-affix-wrapper,
-.ant-input-affix-wrapper:hover,
-.ant-input-affix-wrapper:focus,
-.ant-input:hover {
-  border-color: transparent !important;
-  box-shadow: 0 0 0 0px rgba(5, 145, 255, 0.1);
-}
-.ant-input,
-.ant-input-affix-wrapper {
-  padding: 5px 10px;
-}
-
+/* switch */
 .ant-switch.ant-switch-checked {
   background-color: var(--theme-color) !important;
+}
+
+/* 表格 */
+.ant-table-row-expand-icon.ant-table-row-expand-icon:hover,
+.ant-table-row-expand-icon.ant-table-row-expand-icon:active,
+.ant-table-row-expand-icon.ant-table-row-expand-icon:focus {
+  color: var(--theme-color);
+}
+
+/* 分页 */
+.ant-pagination .ant-pagination-item-active a,
+.ant-pagination .ant-pagination-item-active a:hover,
+.ant-pagination .ant-pagination-item-active,
+.ant-pagination .ant-pagination-item-active:hover {
+  color: var(--theme-color);
+  border-color: var(--theme-color);
 }
 
 /* 颜色选择器样式 */

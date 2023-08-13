@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import type { routeType } from '@/router/routes'
 import config from '@/config/website'
 import type { RouteLocationNormalized } from 'vue-router'
+import type { TreeType } from '@/utils/utils'
 
 interface curmbValue {
   name: string
@@ -45,7 +46,8 @@ export const useStore = defineStore('store', {
       tab: true
     } as settingsType,
     tabs: new Map<string, tabItem>(),
-    isTabActive: {}
+    isTabActive: {},
+    treeList: [] as TreeType[]
   }),
   actions: {
     setSettings(st: Partial<typeof this.settings>) {

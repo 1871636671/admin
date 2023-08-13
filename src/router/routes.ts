@@ -8,6 +8,7 @@ export interface routeType {
   sortNumber?: number
   children?: routeType[]
   type?: number
+  role_tag?: string
 }
 
 const staticRoutes: routeType[] = [

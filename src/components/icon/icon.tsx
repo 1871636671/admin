@@ -26,7 +26,7 @@ const Icon = defineComponent({
         onClick={props.onClick}
         style={[{ fontSize: '20px', cursor: 'pointer', display: 'inline-block' }, props.style]}
       >
-        {h(resolveComponent(props.name))}
+        {props.name ? h(resolveComponent(props.name)) : null}
       </div>
     )
   }
